@@ -10,31 +10,55 @@ module.exports = root => {
   };
   const lines = [];
 
-  const checkUpdate = currentType => {
-    Object.keys(state).forEach(type => {
-      if (state[type] !== null && currentType !== type) {
-        if (type === 'ul') {
-          lines.push(
-            `<ul>${state[type].map(item => `<li>${item}</li>`).join('')}</ul>`
-          );
-        } else if (type === 'ol') {
-          lines.push(
-            `<ol>${state[type].map(item => `<li>${item}</li>`).join('')}</ol>`
-          );
-        } else if (type === 'pre') {
-          lines.push(`<pre>${state[type].join('')}</pre>`);
-        } else {
-          throw new Error('err');
-        }
-
-        state[type] === null;
-      }
+  const checkTag = currentType => {
+    const type = Object.keys(state).find(type => {
+      return state[type] !== null && currentType !== type;
     });
+
+    if (typeof type === 'undefined') {
+      return;
+    }
+
+    if (type === 'ul') {
+      lines.push(
+        `<ul>${state[type].map(item => `<li>${item}</li>`).join('')}</ul>`
+      );
+    } else if (type === 'ol') {
+      lines.push(
+        `<ol>${state[type].map(item => `<li>${item}</li>`).join('')}</ol>`
+      );
+    } else if (type === 'pre') {
+      lines.push(`<pre>${state[type].join('')}</pre>`);
+    } else {
+      throw new Error('err');
+    }
+
+    state[type] = null;
+
+    // Object.keys(state).forEach(type => {
+    //   if (state[type] !== null && currentType !== type) {
+    //     if (type === 'ul') {
+    //       lines.push(
+    //         `<ul>${state[type].map(item => `<li>${item}</li>`).join('')}</ul>`
+    //       );
+    //     } else if (type === 'ol') {
+    //       lines.push(
+    //         `<ol>${state[type].map(item => `<li>${item}</li>`).join('')}</ol>`
+    //       );
+    //     } else if (type === 'pre') {
+    //       lines.push(`<pre>${state[type].join('')}</pre>`);
+    //     } else {
+    //       throw new Error('err');
+    //     }
+
+    //     state[type] === null;
+    //   }
+    // });
   };
 
   root.children.forEach(child => {
     ow(child.type, ow.string);
-    checkUpdate(child.type);
+    checkTag(child.type);
 
     switch (child.type) {
       case 'h1':
@@ -43,7 +67,7 @@ module.exports = root => {
       case 'p': {
         // const chi`<${child.type}>${child.text || ''}</${child.type}>`
         let text = child.text || '';
-        if (({}).hasOwnProperty.call(child, 'links')) {
+        if ({}.hasOwnProperty.call(child, 'links')) {
           Object.keys(child.links).forEach(url => {
             const range = child.links[url];
             const rangeLength = range[1] - range[0];
@@ -51,8 +75,11 @@ module.exports = root => {
             const htmlLink = `<a href="${url}">${linkText}</a>`;
             const htmlLength = htmlLink.length;
 
-            const splittedText = child.text.split('')
-            splittedText.splice.apply(splittedText, [...range, ...htmlLink.split('')])
+            const splittedText = child.text.split('');
+            splittedText.splice.apply(splittedText, [
+              ...range,
+              ...htmlLink.split('')
+            ]);
 
             text = splittedText.join('');
           });

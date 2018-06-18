@@ -1,8 +1,7 @@
 const ow = require('ow');
 
-module.exports = root => {
-  ow(root, ow.object);
-  ow(root.children, ow.array);
+module.exports = children => {
+  ow(children, ow.array);
   const state = {
     ul: null,
     ol: null,
@@ -28,35 +27,15 @@ module.exports = root => {
         `<ol>${state[type].map(item => `<li>${item}</li>`).join('')}</ol>`
       );
     } else if (type === 'pre') {
-      lines.push(`<pre>${state[type].join('')}</pre>`);
+      lines.push(`<pre>${state[type].join('\n')}</pre>`);
     } else {
       throw new Error('err');
     }
 
     state[type] = null;
-
-    // Object.keys(state).forEach(type => {
-    //   if (state[type] !== null && currentType !== type) {
-    //     if (type === 'ul') {
-    //       lines.push(
-    //         `<ul>${state[type].map(item => `<li>${item}</li>`).join('')}</ul>`
-    //       );
-    //     } else if (type === 'ol') {
-    //       lines.push(
-    //         `<ol>${state[type].map(item => `<li>${item}</li>`).join('')}</ol>`
-    //       );
-    //     } else if (type === 'pre') {
-    //       lines.push(`<pre>${state[type].join('')}</pre>`);
-    //     } else {
-    //       throw new Error('err');
-    //     }
-
-    //     state[type] === null;
-    //   }
-    // });
   };
 
-  root.children.forEach(child => {
+  children.forEach(child => {
     ow(child.type, ow.string);
     checkTag(child.type);
 

@@ -1,13 +1,17 @@
 {
-  "name": "slack-file-contents-into-html",
-  "version": "0.0.1",
+  "name": "slack-port-into-html",
+  "version": "0.0.0",
   "main": "index.js",
   "types": "into-html.d.ts",
-  "repository": "nju33/slack-file-contents-into-html",
+  "repository": "nju33/slack-post-into-html",
   "author": "nju33 <nju33.ki@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
-    "ow": "^0.4.0"
+    "ow": "^0.6.0",
+    "replace-range": "^0.0.1"
   },
   "devDependencies": {
     "jest": "^23.1.0"

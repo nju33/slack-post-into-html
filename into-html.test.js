@@ -71,7 +71,7 @@ describe('into-html', () => {
       }
     ]);
     expect(result).toBe(
-      '<p>__<a href="http://example.com">link1</a>__<a href="http://example2.com>link2</a>__</p>'
+      '<p>__<a href="http://example.com">link1</a>__<a href="http://example2.com">link2</a>__</p>'
     );
   });
 });

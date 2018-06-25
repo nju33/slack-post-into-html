@@ -1,4 +1,4 @@
-# slack file contents into html
+# slack post into html
 
 ## usage
 
@@ -29,7 +29,7 @@ const html = intoHtml([
 
 ### formats
 
-- [ ] link
-- [ ] b
-- [ ] i
-- [ ] stroke
+- [x] link
+- [x] b
+- [x] i
+- [x] strike

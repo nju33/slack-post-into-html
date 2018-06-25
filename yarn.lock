@@ -2235,9 +2235,9 @@ osenv@^0.1.4:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
 
-ow@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/ow/-/ow-0.4.0.tgz#119a846d23738ce11677331fef8a3fbe019eb05b"
+ow@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/ow/-/ow-0.6.0.tgz#1371352713192a8dd54ec13ab0f0f1464b58941f"
 
 p-finally@^1.0.0:
   version "1.0.0"
@@ -2471,6 +2471,10 @@ repeating@^2.0.0:
   resolved "https://registry.yarnpkg.com/repeating/-/repeating-2.0.1.tgz#5214c53a926d3552707527fbab415dbc08d06dda"
   dependencies:
     is-finite "^1.0.0"
+
+replace-range@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/replace-range/-/replace-range-0.0.1.tgz#6aeb94757da87e565b039e2b104cb9be99b0328e"
 
 request-promise-core@1.1.1:
   version "1.1.1"

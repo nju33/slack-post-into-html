@@ -1,4 +1,5 @@
 const ow = require('ow');
+const replaceRange = require('replace-range');
 
 module.exports = children => {
   ow(children, ow.array);
@@ -44,25 +45,27 @@ module.exports = children => {
       case 'h2':
       case 'h3':
       case 'p': {
-        // const chi`<${child.type}>${child.text || ''}</${child.type}>`
-        let text = child.text || '';
-        if ({}.hasOwnProperty.call(child, 'links')) {
-          Object.keys(child.links).forEach(url => {
-            const range = child.links[url];
-            const rangeLength = range[1] - range[0];
-            const linkText = child.text.slice.apply(child.text, range);
-            const htmlLink = `<a href="${url}">${linkText}</a>`;
-            const htmlLength = htmlLink.length;
+        const linkRangeItems = Object.keys(child.links || []).map(url => {
+          const range = child.links[url];
+          return [...range, text => `<a href="${url}">${text}</a>`]
+        });
 
-            const splittedText = child.text.split('');
-            splittedText.splice.apply(splittedText, [
-              ...range,
-              ...htmlLink.split('')
-            ]);
+        const formatRangeItems = [];
+        Object.keys(child.formats || []).forEach(tag => {
+          const ranges = child.formats[tag];
+          let index = 0;
 
-            text = splittedText.join('');
-          });
-        }
+          while (index < ranges.length) {
+            const range = ranges.slice(index, 2);
+            formatRangeItems.push([...range, text => `<${tag}>${text}</${tag}>`]);
+            index += 2;
+          }
+        });
+
+        const text = replaceRange(child.text, [
+          ...linkRangeItems,
+          ...formatRangeItems
+        ]);
 
         lines.push(`<${child.type}>${text}</${child.type}>`);
 

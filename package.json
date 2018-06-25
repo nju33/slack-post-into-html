@@ -1,5 +1,5 @@
 {
-  "name": "slack-port-into-html",
+  "name": "slack-post-into-html",
   "version": "0.0.1",
   "main": "index.js",
   "types": "into-html.d.ts",
